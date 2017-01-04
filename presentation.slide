@@ -20,11 +20,60 @@ If you have suggestions or corrections to this presentation, please raise [[http
 
 THIS IS A DRAFT PRESENTATION
 
-IF YOU WOULD LIKE TO CONTRIBUTE TO THIS PRESENTATION PLEASE CONSULT THE [[https://github.com/davecheney/go-1.8-release-party/isues][LIST OF OPEN ISSUES FOR THIS PRESENTATION]
+IF YOU WOULD LIKE TO CONTRIBUTE TO THIS PRESENTATION PLEASE CONSULT THE [[https://github.com/davecheney/go-1.8-release-party/isues][LIST OF OPEN ISSUES FOR THIS PRESENTATION]]
 
 * Go 1.8
 
 Go 1.8 _is_/_was_ released on the Nth of February. 
 
-Go 1.8 is the 9th release. It follows from the previous version, Go 1.7, [https://blog.golang.org/go1.7][released on the 16th of August, 2016]]
+Go 1.8 is the 9th release. It follows from the previous version, Go 1.7, [[https://blog.golang.org/go1.7][released on the 16th of August, 2016]]
+
+* Struct conversion
+
+When explicitly converting a value from one struct type to another, as of Go 1.8 the tags are ignored.
+
+TODO NEEDS EXAMPLE
+
+* Ports
+
+- Go now supports 32-bit MIPS on Linux for both big-endian (linux/mips) and little-endian machines (linux/mipsle) that implement the MIPS32r1 instruction set with FPU or kernel FPU emulation. Note that many common MIPS-based routers lack an FPU and have firmware that doesn't enable kernel FPU emulation; Go won't run on such machines.
+- On DragonFly BSD, Go now requires DragonFly 4.4.4 or later.
+- On OpenBSD, Go now requires OpenBSD 5.9 or later.
+- The Plan 9 port's networking support is now much more complete and matches the behavior of Unix and Windows with respect to deadlines and cancelation.
+- Go 1.8 now only supports OS X 10.8 or later. This is likely the last Go release to support 10.8. Compiling Go or running binaries on older OS X versions is untested.
+- Go 1.8 will be the last release to support Linux on ARMv5E and ARMv6 processors: Go 1.9 will likely require the ARMv6K (as found in the Raspberry Pi 1) or later. To identify whether a Linux system is ARMv6K or later, run “go tool dist -check-armv6k” (to facilitate testing, it is also possible to just copy the dist command to the system without installing a full copy of Go 1.8) and if the program terminates with output "ARMv6K supported." then the system implements ARMv6K or later. Go on non-Linux ARM systems already requires ARMv6K or later.
+
+* Default GOPATH
+
+TODO 
+
+* Compiler changes
+
+- SSA backend
+- Compiler speed
+
+* SSA backend
+
+* Compiler speed
+
+* Lock contention profile
+
+TODO NEEDS EXAMPLE
+
+* Tools
+
+- The yacc tool (previously available by running “go tool yacc”) has been removed. As of Go 1.7 it was no longer used by the Go compiler. It has moved to the “tools” repository and is now available at golang.org/x/tools/cmd/goyacc.
+- `go`tool`asm` now supports a flotilla of Intel and PPC vector instructions. [[https://beta.golang.org/doc/go1.8#cmd_asm][Consult the release notes for the specifics]].
+- The trace tool has a new -pprof flag for producing pprof-compatible blocking and latency profiles from an execution trace. Garbage collection events are now shown more clearly in the execution trace viewer. Garbage collection activity is shown on its own row and GC helper goroutines are annotated with their roles.
+- Vet is stricter in some ways and looser where it previously caused false positives. Vet now checks for copying an array of locks, duplicate JSON and XML struct field tags, non-space-separated struct tags, deferred calls to HTTP Response.Body.Close before checking errors, and indexed arguments in Printf. It also improves existing checks.
+
+* go bug
+
+The new `go`bug` command starts a bug report on GitHub, prefilled with information about the current system.
+
+* Plugins
+
+Go now supports a “plugin” build mode for generating plugins written in Go, and a new plugin package for loading such plugins at run time. Plugin support is only currently available on Linux.
+
+TODO NEEDS DETAILED EXAMPLES.
 
