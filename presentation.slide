@@ -1,6 +1,6 @@
 Go 1.8 Release Party
 YOUR MEETUP
-17 Feb 2017
+16 Feb 2017
 
 YOUR MEETUP
 
@@ -22,4 +22,9 @@ THIS IS A DRAFT PRESENTATION
 
 IF YOU WOULD LIKE TO CONTRIBUTE TO THIS PRESENTATION PLEASE CONSULT THE [[https://github.com/davecheney/go-1.8-release-party/isues][LIST OF OPEN ISSUES FOR THIS PRESENTATION]
 
+* Go 1.8
+
+Go 1.8 _is_/_was_ released on the Nth of February. 
+
+Go 1.8 is the 9th release. It follows from the previous version, Go 1.7, [https://blog.golang.org/go1.7][released on the 16th of August, 2016]]
 
