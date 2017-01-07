@@ -26,7 +26,29 @@ IF YOU WOULD LIKE TO CONTRIBUTE TO THIS PRESENTATION PLEASE CONSULT THE [[https:
 
 Go 1.8 _is_/_was_ released on the Nth of February. 
 
-Go 1.8 is the 9th release. It follows from the previous version, Go 1.7, [[https://blog.golang.org/go1.7][released on the 16th of August, 2016]]
+Go 1.8 is the 9th release in the Go 1 series. It follows from the previous version, Go 1.7, [[https://blog.golang.org/go1.7][released on the 16th of August, 2016]]
+
+TODO LINK TO RELEASE NOTES AND BLOG POST ANNOUNCEMENT
+
+* Performance
+
+As always, the changes are so general and varied that precise statements about performance are difficult to make. Most programs should run a bit faster, due to speedups in the garbage collector and optimizations in the standard library.
+
+* Miscelanious performance improvements
+
+There have been optimizations to implementations in the `bytes`, `crypto/aes`, `crypto/cipher`, `crypto/elliptic`, `crypto/sha256`, `crypto/sha512`, `encoding/asn1`, `encoding/csv`, `encoding/hex`, `encoding/json`, `hash/crc32`, `image/color`, `image/draw`, `math`, `math/big`, `reflect`, `regexp`, `runtime`, `strconv`, `strings`, `syscall`, `text/template`, and `unicode/utf8` packages.
+
+* Garbage Collector
+
+Garbage collection pauses should be significantly shorter than they were in Go 1.7, usually under 100 microseconds and often as low as 10 microseconds. See the document on eliminating stop-the-world stack re-scanning for details. More work remains for Go 1.9.
+
+* Defer
+
+The overhead of deferred function calls has been reduced by about half.
+
+* Cgo
+
+The overhead of calls from Go into C has been reduced by about half.
 
 * Struct conversion
 
@@ -41,7 +63,6 @@ When explicitly converting a value from one struct type to another, as of Go 1.8
 - On OpenBSD, Go now requires OpenBSD 5.9 or later.
 - The Plan 9 port's networking support is now much more complete and matches the behavior of Unix and Windows with respect to deadlines and cancelation.
 - Go 1.8 now only supports OS X 10.8 or later. This is likely the last Go release to support 10.8. Compiling Go or running binaries on older OS X versions is untested.
-- Go 1.8 will be the last release to support Linux on ARMv5E and ARMv6 processors: Go 1.9 will likely require the ARMv6K (as found in the Raspberry Pi 1) or later. To identify whether a Linux system is ARMv6K or later, run “go tool dist -check-armv6k” (to facilitate testing, it is also possible to just copy the dist command to the system without installing a full copy of Go 1.8) and if the program terminates with output "ARMv6K supported." then the system implements ARMv6K or later. Go on non-Linux ARM systems already requires ARMv6K or later.
 
 * Default GOPATH
 
@@ -55,9 +76,19 @@ TODO NEEDS UPGRADE ADVICE
 
 * SSA backend
 
-- All backends updated to use the new SSA form
-- 
-- Big performance improvements for arm32
+- All backends updated to use the new SSA form. Old "plan9" style compiler backend deleted.
+- Big performance improvements for arm32.
+- Easy to add new SSA backends (for values of easy compilier engineers work in).
+
+* New parser
+
+Robert Griesemer and Matthew Dempsky replaced the parser. TODO LINK TO CHANGE
+
+The new parser removes many of the package level variables which came along for the ride from the previous YACC based parser. Removing package level globals is a stepping stone to making the compiler more parallel.
+
+This new parser is reportedly considerably faster, but in 1.8 is hamstrung by having to convert between the new style AST and the old version the rest of the compiler expects.
+
+Expect this AST conversion to be removed in Go 1.9.
 
 * Compiler speed
 
@@ -88,6 +119,14 @@ The new `go`bug` command starts a bug report on GitHub, prefilled with informati
 
 [[https://github.com/davecheney/go-1.8-release-party/issues/4][TODO NEEDS EXAMPLE]]
 
+* go fix
+
+`go`fix` now rewrites references to `golang.org/x/net/context` to the standard library provided `context` package.
+
+* go vet
+
+[[https://github.com/davecheney/go-1.8-release-party/issues/6][TODO NEED DETAILS ON THE GO VET IMPROVEMENTS IN 1.8]]
+
 * Plugins
 
 Go now supports a “plugin” build mode for generating plugins written in Go, and a new plugin package for loading such plugins at run time. Plugin support is only currently available on Linux.
@@ -99,6 +138,25 @@ Go now supports a “plugin” build mode for generating plugins written in Go, 
 Before we close, let's quickly touch on some of the things coming up in Go 1.9
 
 _note_: All of these are speculation, nothing is set in stone until code hits the repo.
+
+* Aliases
+
+After being rolled back before the Go 1.8 freeze, aliases are being re-proposed for Go 1.9 in a more limited fashion.
+
+TODO LINK TO RSC's DOCUMENT
+
+TODO SHOW EXAMPLES
+
+* Faster / cheaper runtime.MemStats
+
+The cost of calling `runtime.MemStats` is propotional to the size of the heap; Austin recently timed it at ~1.7ms per Gb.
+
+There is a CL ready to land that reduces it to 20 us per proc (thread servicing a goroutine) which is a much smaller upper bound.
+
+.link https://github.com/golang/go/issues/13613
+
+TODO LINK TO CL
+
 
 * New calling convention
 
@@ -116,6 +174,18 @@ TODO WILL THIS AFFECT/IMPROVE CGO CALLING TIME?
 
 TODO LINK TO ISSUE / DISCUSSION
 
+* Improvements to the inliner
+
+Inlining has historically been limited to leaf functions because of the concern of agressive inlining on the call graph.
+
+In support of this Robert Griesemer and Matthew Dempsky have been improving the line number tracking in Go 1.9 to make it flexible enough to lift the restriction on non-leaf functions.
+
+An intern, TODO NAME, has been hired to work on the inlinier for 1.9
+
+Josh Bleecher-Snyder has also suggest that the cost model for inlining should be revised to make sure inlining is paying for itself.
+
+TODO LINK TO ISSUE
+
 * ROC collector
 
 TODO WILL THIS MAKE IT INTO 1.9 ?
@@ -127,6 +197,22 @@ WHAT WOULD IT DO ?
 TODO LINK TO DISCUSSION DOCUMENT
 
 TODO LINK TO PUBLIC REPOSITORY IF KNOWN
+
+* Go 1.8 may be the last to support ARMv5
+
+Supporting ARMv5 has been a problem for several releases. 
+
+TODO LINK TO ISSUE
+
+Currently we have no ARMv5 builders so have no idea if Go 1.8 actually works on real ARMv5 hardware (we test on ARMv7).
+
+If you or your company care about ARMv5, you have to shoulder some of the burdon. Contact @bradfitz and set up a builder.
+
+_No_ARMv5_builders_means_ARMv5_support_will_be_dropped_in_Go_1.9_.
+
+From release notes:
+
+Go 1.9 will likely require the ARMv6K (as found in the Raspberry Pi 1) or later. To identify whether a Linux system is ARMv6K or later, run “go tool dist -check-armv6k” (to facilitate testing, it is also possible to just copy the dist command to the system without installing a full copy of Go 1.8) and if the program terminates with output "ARMv6K supported." then the system implements ARMv6K or later. Go on non-Linux ARM systems already requires ARMv6K or later.
 
 * TODO ANYTHING ELSE
 
