@@ -32,7 +32,7 @@ Go 1.8 is the 9th release. It follows from the previous version, Go 1.7, [[https
 
 When explicitly converting a value from one struct type to another, as of Go 1.8 the tags are ignored.
 
-TODO NEEDS EXAMPLE
+[[https://github.com/davecheney/go-1.8-release-party/issues/2][TODO NEEDS EXAMPLE]]
 
 * Ports
 
@@ -45,20 +45,35 @@ TODO NEEDS EXAMPLE
 
 * Default GOPATH
 
-TODO 
+TODO NEEDS LINK TO ISSUE AND DISCUSSION
+
+[[https://github.com/davecheney/go-1.8-release-party/issues/3][TODO NEED EXAMPLE]]
+
+TODO NEEDS UPGRADE ADVICE
 
 * Compiler changes
 
-- SSA backend
-- Compiler speed
-
 * SSA backend
+
+- All backends updated to use the new SSA form
+- 
+- Big performance improvements for arm32
 
 * Compiler speed
 
-* Lock contention profile
+About a 12-15% improvement compared to Go 1.7
+
+TODO NEED GRAPHS
+
+* Mutex contention profile
+
+Peter Wienberger (TODO CHECK SPELLING) has added a new pprof profile, mutex contention
 
 TODO NEEDS EXAMPLE
+
+_note_: do to an oversight this only works with `sync.Mutex`, not `sync.RWMutex`, this oversight will be addressed early in Go 1.9.
+
+TODO LINK TO ISSUE ABOUT RWMUTEX
 
 * Tools
 
@@ -71,9 +86,55 @@ TODO NEEDS EXAMPLE
 
 The new `go`bug` command starts a bug report on GitHub, prefilled with information about the current system.
 
+[[https://github.com/davecheney/go-1.8-release-party/issues/4][TODO NEEDS EXAMPLE]]
+
 * Plugins
 
 Go now supports a “plugin” build mode for generating plugins written in Go, and a new plugin package for loading such plugins at run time. Plugin support is only currently available on Linux.
 
-TODO NEEDS DETAILED EXAMPLES.
+[[https://github.com/davecheney/go-1.8-release-party/issues/5][TODO NEEDS DETAILED EXAMPLES]]
+
+* What's coming up in Go 1.9
+
+Before we close, let's quickly touch on some of the things coming up in Go 1.9
+
+_note_: All of these are speculation, nothing is set in stone until code hits the repo.
+
+* New calling convention
+
+On [[https://changelog.com/gotime/27][GoTime episode 27]] Keith Randall hinted that Go may change it's calling convention.
+
+The current Go calling convention passes all parameters and results on the stack.
+
+This makes things like the scheduler and the garbage collector simpler, as you know when you enter a function, no registers are live or contain pointers.
+
+Most other languages pass some or all of their arguments in registers, and Keith thinks there is possibly a 10% speedup in changing the calling convetion.
+
+Changing the calling convention would affect all the assembly code written. One solution would be to have the assember/compiler/go tool ? generate studs to convert between new and old calling conventions for 
+
+TODO WILL THIS AFFECT/IMPROVE CGO CALLING TIME?
+
+TODO LINK TO ISSUE / DISCUSSION
+
+* ROC collector
+
+TODO WILL THIS MAKE IT INTO 1.9 ?
+
+WHAT WOULD IT DO ?
+
+* Official dependency management tool
+
+TODO LINK TO DISCUSSION DOCUMENT
+
+TODO LINK TO PUBLIC REPOSITORY IF KNOWN
+
+* TODO ANYTHING ELSE
+
+ARE THERE OTHER UPCOMING 1.9 FEATURES TO BE AWARE OF
+
+* Conclusion
+
+Upgrade to Go 1.8, now! 
+
+It's literally the best version of Go to date.
 

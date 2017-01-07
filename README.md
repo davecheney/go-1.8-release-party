@@ -10,5 +10,5 @@ If you'd like to contribute to this presentation, please do so.
 Specifically detailed explanations, _with code!_, are keenly sought.
 If you have a code example or sample code, consider placing them in another repository and linking to it from this presentation.
 
-If you don't know where to start, [please consult the list of open issues](https://github.com/davecheney/go-1.8-release-party/issues).
+If you don't know where to start, [please consult the list of open issues](https://github.com/davecheney/go-1.8-release-party/issues) or grep the presentation for `TODO`.
 
