@@ -123,9 +123,9 @@ The new `go`bug` command starts a bug report on GitHub, prefilled with informati
 
 `go`fix` now rewrites references to `golang.org/x/net/context` to the standard library provided `context` package.
 
-* go vet
+* go vet - repeated struct tags and multiple struct tags
 
-[[https://github.com/davecheney/go-1.8-release-party/issues/6][TODO NEED DETAILS ON THE GO VET IMPROVEMENTS IN 1.8]]
+.code examples/vet_repeated_json_tags.go
 
 * Plugins
 
