@@ -131,7 +131,21 @@ The new `go`bug` command starts a bug report on GitHub, prefilled with informati
 
 Go now supports a “plugin” build mode for generating plugins written in Go, and a new plugin package for loading such plugins at run time. Plugin support is only currently available on Linux.
 
-[[https://github.com/davecheney/go-1.8-release-party/issues/5][TODO NEEDS DETAILED EXAMPLES]]
+* Plugin Example
+
+.code examples/plugins/plugin.go
+
+Then to build plugin.so
+
+ $ go build -buildmode=plugin plugin.go
+
+* Plugin Example - Using Plugin
+.code examples/plugins/main.go  /START OMIT/,/END OMIT/
+
+ $ go run main.go
+ main started...
+ Plugin loading
+ Hello, number 7
 
 * What's coming up in Go 1.9
 
