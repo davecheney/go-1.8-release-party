@@ -54,7 +54,7 @@ The overhead of calls from Go into C has been reduced by about half.
 
 When explicitly converting a value from one struct type to another, as of Go 1.8 the tags are ignored.
 
-[[https://github.com/davecheney/go-1.8-release-party/issues/2][TODO NEEDS EXAMPLE]]
+.code examples/struct_conversion.go
 
 * Ports
 
