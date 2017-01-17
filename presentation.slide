@@ -34,7 +34,7 @@ TODO LINK TO RELEASE NOTES AND BLOG POST ANNOUNCEMENT
 
 As always, the changes are so general and varied that precise statements about performance are difficult to make. Most programs should run a bit faster, due to speedups in the garbage collector and optimizations in the standard library.
 
-* Miscelanious performance improvements
+* Miscellaneous performance improvements
 
 There have been optimizations to implementations in the `bytes`, `crypto/aes`, `crypto/cipher`, `crypto/elliptic`, `crypto/sha256`, `crypto/sha512`, `encoding/asn1`, `encoding/csv`, `encoding/hex`, `encoding/json`, `hash/crc32`, `image/color`, `image/draw`, `math`, `math/big`, `reflect`, `regexp`, `runtime`, `strconv`, `strings`, `syscall`, `text/template`, and `unicode/utf8` packages.
 
@@ -98,7 +98,7 @@ TODO NEED GRAPHS
 
 * Mutex contention profile
 
-Peter Wienberger (TODO CHECK SPELLING) has added a new pprof profile, mutex contention
+Peter Wienberger has added a new pprof profile, mutex contention.
 
 TODO NEEDS EXAMPLE
 
@@ -157,7 +157,7 @@ _note_: All of these are speculation, nothing is set in stone until code hits th
 
 After being rolled back before the Go 1.8 freeze, aliases are being re-proposed for Go 1.9 in a more limited fashion.
 
-TODO LINK TO RSC's DOCUMENT
+.link https://golang.org/design/18130-type-alias
 
 TODO SHOW EXAMPLES
 
@@ -167,14 +167,14 @@ The cost of calling `runtime.MemStats` is propotional to the size of the heap; A
 
 There is a CL ready to land that reduces it to 20 us per proc (thread servicing a goroutine) which is a much smaller upper bound.
 
-.link https://github.com/golang/go/issues/13613
+.link https://golang.org/issue/13613
 
 TODO LINK TO CL
 
 
 * New calling convention
 
-On [[https://changelog.com/gotime/27][GoTime episode 27]] Keith Randall hinted that Go may change it's calling convention.
+On [[https://changelog.com/gotime/27][GoTime episode 27]], Keith Randall hinted that Go may change its calling convention.
 
 The current Go calling convention passes all parameters and results on the stack.
 
