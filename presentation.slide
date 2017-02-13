@@ -117,7 +117,24 @@ TODO LINK TO ISSUE ABOUT RWMUTEX
 
 The new `go`bug` command starts a bug report on GitHub, prefilled with information about the current system.
 
-[[https://github.com/davecheney/go-1.8-release-party/issues/4][TODO NEEDS EXAMPLE]]
+ $ go bug                        
+ Please file a new issue at golang.org/issue/new using this template:
+ Please answer these questions before submitting your issue. Thanks!
+
+ #### What did you do?
+ If possible, provide a recipe for reproducing the error.
+ A complete runnable program is good.
+ A link on play.golang.org is best.
+
+ #### What did you expect to see?
+ #### What did you see instead?
+ #### Does this issue reproduce with the latest release (go1.7.5)?
+ #### System details
+ ```
+ go version go1.8rc3 linux/amd64
+ GOARCH="amd64"
+ // END OMIT
+ ```
 
 * go fix
 
