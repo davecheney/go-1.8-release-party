@@ -225,23 +225,6 @@ There is a CL ready to land that reduces it to 20 us per proc (thread servicing 
 
 TODO LINK TO CL
 
-
-* New calling convention
-
-On [[https://changelog.com/gotime/27][GoTime episode 27]], Keith Randall hinted that Go may change its calling convention.
-
-The current Go calling convention passes all parameters and results on the stack.
-
-This makes things like the scheduler and the garbage collector simpler, as you know when you enter a function, no registers are live or contain pointers.
-
-Most other languages pass some or all of their arguments in registers, and Keith thinks there is possibly a 10% speedup in changing the calling convetion.
-
-Changing the calling convention would affect all the assembly code written. One solution would be to have the assember/compiler/go tool ? generate studs to convert between new and old calling conventions for 
-
-TODO WILL THIS AFFECT/IMPROVE CGO CALLING TIME?
-
-TODO LINK TO ISSUE / DISCUSSION
-
 * Improvements to the inliner
 
 Inlining has historically been limited to leaf functions because of the concern of agressive inlining on the call graph.
@@ -262,6 +245,12 @@ WHAT WOULD IT DO ?
 
 * Official dependency management tool
 
+Finally!
+
+Peter Bourgon, Sam Boyer, Jess Frazelle, and Steve Francia have been working on an _official_ dependency management tool, `dep`.
+
+If you're used to Glide or govendor, you won't be too surprised.
+
 TODO LINK TO DISCUSSION DOCUMENT
 
 TODO LINK TO PUBLIC REPOSITORY IF KNOWN
@@ -270,11 +259,14 @@ TODO LINK TO PUBLIC REPOSITORY IF KNOWN
 
 Supporting ARMv5 has been a problem for several releases. 
 
-TODO LINK TO ISSUE
 
 Currently we have no ARMv5 builders so have no idea if Go 1.8 actually works on real ARMv5 hardware (we test on ARMv7).
 
+Several companies have complained about loosing ARMv5 support, and several have offered to run a builder -- but there are _still_ no real ARMv5 builders on the dashboard.
+
 If you or your company care about ARMv5, you have to shoulder some of the burdon. Contact @bradfitz and set up a builder.
+
+.link https://github.com/golang/go/issues/17082 Proposal: runtime: drop support for linux/armv5E and linux/armv6
 
 _No_ARMv5_builders_means_ARMv5_support_will_be_dropped_in_Go_1.9_.
 
