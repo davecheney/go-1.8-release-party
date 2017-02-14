@@ -115,7 +115,7 @@ TODO NEEDS UPGRADE ADVICE
 
 - All backends updated to use the new SSA form. Old "plan9" style compiler backend deleted.
 - Big performance improvements for arm32.
-- Easy to add new SSA backends (for values of easy compilier engineers work in).
+- Easy to add new SSA backends (for values of easy compiler engineers work in).
 
 * New parser
 
@@ -139,7 +139,7 @@ Peter Wienberger has added a new pprof profile, mutex contention.
 
 TODO NEEDS EXAMPLE
 
-_note_: do to an oversight this only works with `sync.Mutex`, not `sync.RWMutex`, this oversight will be addressed early in Go 1.9.
+_note_: Due to an oversight this only works with `sync.Mutex`, not `sync.RWMutex`, this oversight will be addressed early in Go 1.9.
 
 TODO LINK TO ISSUE ABOUT RWMUTEX
 
@@ -231,7 +231,7 @@ Inlining has historically been limited to leaf functions because of the concern 
 
 In support of this Robert Griesemer and Matthew Dempsky have been improving the line number tracking in Go 1.9 to make it flexible enough to lift the restriction on non-leaf functions.
 
-An intern, TODO NAME, has been hired to work on the inlinier for 1.9
+An intern, TODO NAME, has been hired to work on the inliner for 1.9
 
 Josh Bleecher-Snyder has also suggest that the cost model for inlining should be revised to make sure inlining is paying for itself.
 
