@@ -276,11 +276,15 @@ Go 1.9 will likely require the ARMv6K (as found in the Raspberry Pi 1) or later.
 
 * os.Executable
 
-TODO
+`os.Executable` returns an absolute path to the currently running program.
 
-http://beta.golang.org/pkg/os/#Executable
+.play examples/os_executable.go /START OMIT/,/END OMIT/
 
-.link https://github.com/davecheney/go-1.8-release-party/issues/11 Issue #11
+Executable returns the path name for the executable that started the current process. There is no guarantee that the path is still pointing to the correct executable.
+
+If a symlink was used to start the process, depending on the operating system, the result might be the symlink or the path it pointed to. If a stable result is needed, path/filepath.EvalSymlinks might help.
+
+.link http://beta.golang.org/pkg/os/#Executable os.Executable (godoc.org)
 
 * TODO ANYTHING ELSE
 
