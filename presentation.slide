@@ -24,39 +24,76 @@ IF YOU WOULD LIKE TO CONTRIBUTE TO THIS PRESENTATION PLEASE CONSULT THE [[https:
 
 * Go 1.8
 
-Go 1.8 _is_/_was_ released on the Nth of February. 
+Go 1.8 was released on the 15th of February. 
+
+# .link https://groups.google.com/forum/#!topic/golang-dev/G09HaWfMl6g
 
 Go 1.8 is the 9th release in the Go 1 series. It follows from the previous version, Go 1.7, [[https://blog.golang.org/go1.7][released on the 16th of August, 2016]]
 
-TODO LINK TO RELEASE NOTES AND BLOG POST ANNOUNCEMENT
+.link http://beta.golang.org/doc/go1.8 Go 1.8 Release Notes (DRAFT)
 
 * Performance
 
-As always, the changes are so general and varied that precise statements about performance are difficult to make. Most programs should run a bit faster, due to speedups in the garbage collector and optimizations in the standard library.
+As always, the changes are so general and varied that precise statements about performance are difficult to make.
+
+Most programs should run a bit faster, due to speedups in the garbage collector and optimizations in the standard library.
+
+.link https://dave.cheney.net/2016/11/19/go-1-8-toolchain-improvements Go 1.8 Toolchain Improvements
 
 * Miscellaneous performance improvements
 
+Lots of small updates to the standard library.
+
 There have been optimizations to implementations in the `bytes`, `crypto/aes`, `crypto/cipher`, `crypto/elliptic`, `crypto/sha256`, `crypto/sha512`, `encoding/asn1`, `encoding/csv`, `encoding/hex`, `encoding/json`, `hash/crc32`, `image/color`, `image/draw`, `math`, `math/big`, `reflect`, `regexp`, `runtime`, `strconv`, `strings`, `syscall`, `text/template`, and `unicode/utf8` packages.
+
+.link http://beta.golang.org/doc/go1.8#library Go 1.8 Standard Library Changes
 
 * Garbage Collector
 
-Garbage collection pauses should be significantly shorter than they were in Go 1.7, usually under 100 microseconds and often as low as 10 microseconds. See the document on eliminating stop-the-world stack re-scanning for details. More work remains for Go 1.9.
+Garbage collection pauses should be significantly shorter than they were in Go 1.7, usually under 100 microseconds and often as low as 10 microseconds.
+
+.link https://github.com/golang/proposal/blob/master/design/17503-eliminate-rescan.md Eliminating Stop-The-World Stack Re-scanning (Design doc)
+
+More work remains for Go 1.9.
 
 * Defer
 
 The overhead of deferred function calls has been reduced by about half.
 
+ name           old time/op  new time/op  delta
+ Defer-4        75.1ns ± 1%  43.3ns ± 1%  -42.31%   (p=0.000 n=8+10)
+ 
+ In reality, this speeds up defer by about 2.2X. The two benchmarks
+ below compare a Lock/defer Unlock pair (DeferLock) with a Lock/Unlock
+ pair (NoDeferLock). NoDeferLock establishes a baseline cost, so these
+ two benchmarks together show that this change reduces the overhead of
+ defer from 61.4ns to 27.9ns.
+ 
+ name           old time/op  new time/op  delta
+ DeferLock-4    77.4ns ± 1%  43.9ns ± 1%  -43.31%  (p=0.000 n=10+10)
+ NoDeferLock-4  16.0ns ± 0%  15.9ns ± 0%   -0.39%    (p=0.000 n=9+8)
+
+.link https://go-review.googlesource.com/#/c/29656/ Source: CL 29656
+ 
 * Cgo
 
-The overhead of calls from Go into C has been reduced by about half.
+This also shaves the overhead of cgo calls in half:
+
+ name       old time/op  new time/op  delta
+ CgoNoop-8  93.5ns ± 0%  51.1ns ± 1%  -45.34%  (p=0.016 n=4+5) 
+
+.link https://go-review.googlesource.com/#/c/29656/ Source: CL 29656
+.link https://dave.cheney.net/2016/11/19/go-1-8-toolchain-improvements#defer Defer and cgo improvements
 
 * Struct conversion
 
 When explicitly converting a value from one struct type to another, as of Go 1.8 the tags are ignored.
 
-.code examples/struct_conversion.go
+.play examples/struct_conversion.go /START OMIT/,/END OMIT/
 
 * Ports
+
+The number of platforms Go supports, on balance, continues to grow.
 
 - Go now supports 32-bit MIPS on Linux for both big-endian (linux/mips) and little-endian machines (linux/mipsle) that implement the MIPS32r1 instruction set with FPU or kernel FPU emulation. Note that many common MIPS-based routers lack an FPU and have firmware that doesn't enable kernel FPU emulation; Go won't run on such machines.
 - On DragonFly BSD, Go now requires DragonFly 4.4.4 or later.
