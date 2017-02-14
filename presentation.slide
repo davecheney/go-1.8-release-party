@@ -131,7 +131,7 @@ Expect this AST conversion to be removed in Go 1.9.
 
 About a 12-15% improvement compared to Go 1.7
 
-TODO NEED GRAPHS
+.image https://dave.cheney.net/wp-content/uploads/2016/11/Screenshot-2016-11-19-at-08.57.10.png
 
 * Mutex contention profile
 
