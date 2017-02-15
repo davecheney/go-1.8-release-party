@@ -83,17 +83,19 @@ The overhead of deferred function calls has been reduced by about half.
  DeferLock-4    77.4ns ± 1%  43.9ns ± 1%  -43.31%  (p=0.000 n=10+10)
  NoDeferLock-4  16.0ns ± 0%  15.9ns ± 0%   -0.39%    (p=0.000 n=9+8)
 
-.link https://go-review.googlesource.com/#/c/29656/ Source: CL 29656
+.link https://golang.org/cl/29656 Source: CL 29656
+.link https://dave.cheney.net/2016/11/19/go-1-8-toolchain-improvements#defer Defer and cgo improvements
  
 * Cgo
 
-This also shaves the overhead of cgo calls in half:
+The overhead of cgo calls is reduced by more than half:
 
  name       old time/op  new time/op  delta
- CgoNoop-8  93.5ns ± 0%  51.1ns ± 1%  -45.34%  (p=0.016 n=4+5) 
+ CgoNoop-8   146ns ± 1%    56ns ± 6%  -61.57%  (p=0.000 n=25+30)
 
-.link https://go-review.googlesource.com/#/c/29656/ Source: CL 29656
-.link https://dave.cheney.net/2016/11/19/go-1-8-toolchain-improvements#defer Defer and cgo improvements
+This is the result of merging two defers on the standard cgo calling path.
+
+.link https://crawshaw.io/blog/go1.8-cgo Less cgo overhead in Go 1.8
 
 * Miscellaneous performance improvements
 
