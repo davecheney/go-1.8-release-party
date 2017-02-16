@@ -289,9 +289,11 @@ If a symlink was used to start the process, depending on the operating system, t
 
 * Detection of concurrent map accesses
 
-In Go 1.6, the runtime added lightweight, best-effort detection of concurrent misuse of maps. This release improves that detector with support for detecting programs that concurrently write to and iterate over a map.
+In Go 1.6, the runtime added lightweight, best-effort detection of concurrent misuse of maps. Go 1.8 improves that detector with support for detecting programs that concurrently write to and iterate over a map.
 
-As always, if one goroutine is writing to a map, no other goroutine should be reading (which includes iterating) or writing the map concurrently. If the runtime detects this condition, it prints a diagnosis and crashes the program. The best way to find out more about the problem is to run the program under the race detector, which will more reliably identify the race and give more detail.
+.play examples/maps.go /func main/,/^}/
+
+If the runtime detects this condition, it prints a diagnosis and crashes the program.
 
 * Changes to the standard library
 
