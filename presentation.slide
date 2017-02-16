@@ -368,6 +368,9 @@ Reads/Writes to other file descriptors have traditionally consumed an OS thread 
 
 Recently Ian Lance Taylor landed a refactor that broken our the `runtime` polling subsystem and extended to work for the rest of the `os` package.
 
+.link https://go-review.googlesource.com/#/c/36799/ net: refactor poller into new internal/poll package
+.link https://go-review.googlesource.com/#/c/36800/ os: use poller for file I/O 
+
 There is no sign of a programmer accessible poller, yet.
 
 * Official dependency management tool
