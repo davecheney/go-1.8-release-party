@@ -225,11 +225,24 @@ If you don't like these defaults, just set `$GOPATH` to your preferred location.
 
 Peter Wienberger has added a new pprof profile, mutex contention.
 
+Profile your benchmarks and the contention on your mutexes.
+
+    go test bench=. -mutexprofile=mutex.out
+
+_Note_: For now `sync.RWMutex` is not profiled.
+
+
 TODO NEEDS EXAMPLE
 
 _note_: Due to an oversight this only works with `sync.Mutex`, not `sync.RWMutex`, this oversight will be addressed early in Go 1.9.
 
 .link https://github.com/golang/go/issues/18496 runtime: contended mutex profiling doesn't work for sync.RWMutex
+
+* Homework
+
+Mutex profile is not supported in, [[pkg/profile][https://github.com/pkg/profile]]. yet ...
+
+Who wants to be the first to send me a PR?
 
 * Plugins
 
@@ -271,120 +284,11 @@ If a symlink was used to start the process, depending on the operating system, t
 
 .link http://beta.golang.org/pkg/os/#Executable os.Executable (godoc.org)
 
-* Conversion rules
-
-How many times have you found yourself with two types that were *almost* equal?
-
-Let's say you define `Person`:
-
-.code examples/json_old.go /type Person/,/^}/
-
-And that for some reason, like JSON you also have:
-
-.code examples/json_old.go /var aux/,/}/
-
-* Conversion rules
-
-In order to convert `aux` to type `Person` you needed to do:
-
-.code examples/json_old.go /type Person/,/}/
-
-    return Person{
-        Name:     aux.Name,
-        AgeYears: aux.AgeYears,
-        SSN:      aux.SSN
-    }
-
-* Conversion rules
-
-Since Go 1.8 you can simply do:
-
-    return Person(aux)
-
-Both types still need to have:
-
-- same *sequence* of fields (the order matters)
-- corresponding fields with same type.
-
-* Conversion rules
-
-A non-constant value x can be converted to type T in any of these cases:
-
-- x is assignable to T.
-- x's type and T have identical underlying types.
-- x's type and T are unnamed pointer types and their pointer base types have identical underlying types.
-- ...
-
-* Conversion rules
-
-A non-constant value x can be converted to type T in any of these cases:
-
-- x is assignable to T.
-- *ignoring*struct*tags*, x's type and T have identical underlying types.
-- *ignoring*struct*tags*, x's type and T are unnamed pointer types and their pointer base types have identical underlying types.
-- ...
-
-* Ports to other platforms
-
-* Ports to other platforms
-
-32-bit MIPS
-
-- big-endian (`linux/mips`)
-- little-endian (`linux/mipsle`) - requires Floating Point Unit
-
-Go on DragonFly BSD now requires DragonFly 4.4.4+.
-
-Go on OpenBSD now requires OpenBSD 5.9+.
-
-Plan 9 is now better!
-
-* Ports to other platforms
-
-Go 1.8 supports OS X 10.8+. Likely last time we support 10.8.
-
-ARM:
-
-- Go 1.8 is the last version to support ARMv5E and ARMv6 processors.
-
-- Go 1.9 will require ARMv6K. Will it work on my platform?
-
-    go tool dist -check-armv6k
-
-* SSA everywhere!
-
-The SSA backend:
-
-- generates more compact and efficient code
-- is a better platform for optimizations
-
-For 32-bit ARM systems this means 20-30% speed up!
-
-For others (where SSA was used already) gains are 0-10%.
-
-* Runtime
-
 * Detection of concurrent map accesses
 
 In Go 1.6, the runtime added lightweight, best-effort detection of concurrent misuse of maps. This release improves that detector with support for detecting programs that concurrently write to and iterate over a map.
 
 As always, if one goroutine is writing to a map, no other goroutine should be reading (which includes iterating) or writing the map concurrently. If the runtime detects this condition, it prints a diagnosis and crashes the program. The best way to find out more about the problem is to run the program under the race detector, which will more reliably identify the race and give more detail.
-
-* Mutex Contention Profiling
-
-Profile your benchmarks and the contention on your mutexes.
-
-    go test bench=. -mutexprofile=mutex.out
-
-_Note_: For now `sync.RWMutex` is not profiled.
-
-* Mutex Contention Profiling
-
-* Homework
-
-Mutex profile is not supported in, [[pkg/profile][https://github.com/pkg/profile]]. yet ...
-
-Who wants to be the first to send me a PR?
 
 * Changes to the standard library
 
@@ -444,19 +348,17 @@ There is a CL ready to land that reduces it to 20 us per proc (thread servicing 
 
 .link https://golang.org/issue/13613
 
-TODO LINK TO CL
-
 * Improvements to the inliner
 
 Inlining has historically been limited to leaf functions because of the concern of agressive inlining on the call graph.
 
 In support of this Robert Griesemer and Matthew Dempsky have been improving the line number tracking in Go 1.9 to make it flexible enough to lift the restriction on non-leaf functions.
 
-An intern, TODO NAME, has been hired to work on the inliner for 1.9
+An unnamed intern has been hired to work on the inliner for 1.9.
 
 Josh Bleecher-Snyder has also suggest that the cost model for inlining should be revised to make sure inlining is paying for itself.
 
-TODO LINK TO ISSUE
+.link https://github.com/golang/go/issues/17566 Issue 17566
 
 * A user level poller
 
@@ -464,9 +366,9 @@ Go has used epoll/kqueue/poll/select for _network_sockets_ for years.
 
 Reads/Writes to other file descriptors have traditionally consumed an OS thread during operation
 
-Recently Ian Lance Taylor landed a refactor that broken our the `runtime` polling subsystem [link] and extended to work for the rest of the `os` package.
+Recently Ian Lance Taylor landed a refactor that broken our the `runtime` polling subsystem and extended to work for the rest of the `os` package.
 
-There is no sign of a programmer accessible poller, yet (link to issue)
+There is no sign of a programmer accessible poller, yet.
 
 * Official dependency management tool
 
@@ -486,7 +388,7 @@ It's described as _pre_alpha_ at the moment, but you should check it out, and le
 
 .image img/party-gopher.png
 
-Upgrade to Go 1.8, now! 
+Upgrade to Go 1.8, now!
 
 It's literally the best version of Go, _ever_.
 
