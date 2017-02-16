@@ -184,7 +184,7 @@ Garbage collection events are now shown more clearly in the execution trace view
 
 Garbage collection activity is shown on its own row and GC helper goroutines are annotated with their roles.
 
-.link https://www.youtube.com/watch?v=mmqDlbWk_XA Rhys Hiltner (dotGo 2016)
+.link https://www.youtube.com/watch?v=mmqDlbWk_XA Rhys Hiltner's execution tracer presentation (dotGo 2016)
 
 * go tool vet
 
@@ -234,7 +234,6 @@ Profile your benchmarks and the contention on your mutexes.
     go test bench=. -mutexprofile=mutex.out
 
 _Note_: For now `sync.RWMutex` is not profiled.
-
 
 TODO NEEDS EXAMPLE
 
@@ -298,6 +297,10 @@ As always, if one goroutine is writing to a map, no other goroutine should be re
 
 * sort.Slice
 
+The `sort` package has a new convenice method `sort.Slice`
+
+.code examples/sort.go /switch.+{/,/^\t}/
+
 * HTTP shutdown
 
 A long requested feature, graceful shutdown of a `http.Server` was added in Go 1.8.
@@ -328,6 +331,10 @@ Since Go 1.8:
 - database/sql
 - net.Resolver
 
+* Minor changes
+
+.link http://beta.golang.org/doc/go1.8#minor_library_changes Minor library changes
+
 * What's coming up in Go 1.9
 
 * What's coming up in Go 1.9
@@ -342,7 +349,7 @@ After being rolled back before the Go 1.8 freeze, aliases are being re-proposed 
 
 .link https://golang.org/design/18130-type-alias
 
-TODO SHOW EXAMPLES
+.play -edit examples/alias.go
 
 * Faster / cheaper runtime.MemStats
 
