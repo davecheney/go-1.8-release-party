@@ -229,17 +229,32 @@ If you don't like these defaults, just set `$GOPATH` to your preferred location.
 
 Peter Wienberger has added a new pprof profile, mutex contention.
 
-Profile your benchmarks and the contention on your mutexes.
+.code examples/mutex_test.go /testing.B/,/^}/
 
-    go test bench=. -mutexprofile=mutex.out
-
-_Note_: For now `sync.RWMutex` is not profiled.
-
-TODO NEEDS EXAMPLE
 
 _note_: Due to an oversight this only works with `sync.Mutex`, not `sync.RWMutex`, this oversight will be addressed early in Go 1.9.
 
 .link https://github.com/golang/go/issues/18496 runtime: contended mutex profiling doesn't work for sync.RWMutex
+
+* Mutex contention profile
+
+    % go test examples/mutex_test.go -bench=. -mutexprofile=mutex.out
+    % go tool pprof mutex.test mutex.out
+    (pprof) list
+    Total: 290.81ms
+    ROUTINE ======================== command-line-arguments.(*Map).Put in /Users/dfc/devel/go-1.8-release-party/examples/mutex_test.go
+         0   290.81ms (flat, cum)   100% of Total
+         .          .      9:}
+         .          .     10:
+         .          .     11:func (m *Map) Put(key string, val int) {
+         .          .     12:   m.Lock()
+         .          .     13:   m.m[key] = val
+         .   290.81ms     14:   m.Unlock()
+         .          .     15:}
+         .          .     16:
+         .          .     17:func BenchmarkMutex(b *testing.B) {
+         .          .     18:   const N = 16
+         .          .     19:   for n := 0; n < b.N; n++ {
 
 * Homework
 
@@ -289,7 +304,7 @@ If a symlink was used to start the process, depending on the operating system, t
 
 * Detection of concurrent map accesses
 
-In Go 1.6, the runtime added lightweight, best-effort detection of concurrent misuse of maps. Go 1.8 improves that detector with support for detecting programs that concurrently write to and iterate over a map.
+In Go 1.6, the runtime added lightweight, [[http://talks.godoc.org/github.com/davecheney/gosyd/go1.6.slide#18][best-effort detection of concurrent misuse of maps]]. Go 1.8 improves that detector with support for detecting programs that concurrently write to and iterate over a map.
 
 .play examples/maps.go /func main/,/^}/
 
