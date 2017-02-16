@@ -19,15 +19,15 @@ If you have suggestions or corrections to this presentation, please raise [[http
 
 * Go 1.8
 
-Go 1.8 is _really_close_, seriously.
+Go 1.8 is released!
 
 .image img/rocket.jpg _ 350
 
-# .link https://groups.google.com/forum/#!topic/golang-dev/G09HaWfMl6g
+.link https://t.co/cIEsMPeY0k Go 1.8 Announcement 
 
 Go 1.8 is the 9th release in the Go 1 series. It follows from the previous version, Go 1.7, [[https://blog.golang.org/go1.7][released on the 16th of August, 2016]]
 
-.link http://beta.golang.org/doc/go1.8 Go 1.8 Release Notes (DRAFT)
+.link http://golang.org/doc/go1.8 Go 1.8 Release Notes
 
 * What's changed?
 
@@ -102,7 +102,7 @@ Lots of small updates to the standard library.
 
 There have been optimizations to implementations in the `bytes`, `crypto/aes`, `crypto/cipher`, `crypto/elliptic`, `crypto/sha256`, `crypto/sha512`, `encoding/asn1`, `encoding/csv`, `encoding/hex`, `encoding/json`, `hash/crc32`, `image/color`, `image/draw`, `math`, `math/big`, `reflect`, `regexp`, `runtime`, `strconv`, `strings`, `syscall`, `text/template`, and `unicode/utf8` packages.
 
-.link http://beta.golang.org/doc/go1.8#library Go 1.8 Standard Library Changes
+.link http://golang.org/doc/go1.8#library Go 1.8 Standard Library Changes
 
 * Compiler changes
 
@@ -301,7 +301,7 @@ Executable returns the path name for the executable that started the current pro
 
 If a symlink was used to start the process, depending on the operating system, the result might be the symlink or the path it pointed to. If a stable result is needed, path/filepath.EvalSymlinks might help.
 
-.link http://beta.golang.org/pkg/os/#Executable os.Executable (godoc.org)
+.link http://golang.org/pkg/os/#Executable os.Executable (godoc.org)
 
 * Detection of concurrent map accesses
 
@@ -345,7 +345,7 @@ Continuing Go 1.7's adoption of `context.Context` into the standard library, Go 
 
 * Minor changes
 
-.link http://beta.golang.org/doc/go1.8#minor_library_changes Minor library changes
+.link http://golang.org/doc/go1.8#minor_library_changes Minor library changes
 
 * What's coming up in Go 1.9
 
