@@ -319,17 +319,11 @@ Call `Shutdown` when a signal is received:
 
 * More context support
 
-Since Go 1.7:
+Continuing Go 1.7's adoption of `context.Context` into the standard library, Go 1.8 adds more context support to existing packages:
 
-- net
-- net/http
-- os/exec
-
-Since Go 1.8:
-
-- http.Server.Shutdown
-- database/sql
-- net.Resolver
+- The new `Server.Shutdown` takes a context argument.
+- There have been significant additions to the `database/sql` package with context support.
+- All nine of the new `Lookup` methods on the new `net.Resolver` now take a context.
 
 * Minor changes
 
