@@ -1,8 +1,9 @@
 Go 1.8 Release Party
-YOUR MEETUP
+Sydney Go Users' Group
 16 Feb 2017
 
-YOUR MEETUP
+Dave Cheney
+@davecheney
 
 * License and Materials
 
@@ -18,7 +19,7 @@ If you have suggestions or corrections to this presentation, please raise [[http
 
 * Go 1.8
 
-Go 1.8 is _really_close_ to release. Seriously.
+Go 1.8 is _really_close_, seriously.
 
 .image img/rocket.jpg _ 350
 
@@ -28,9 +29,9 @@ Go 1.8 is the 9th release in the Go 1 series. It follows from the previous versi
 
 .link http://beta.golang.org/doc/go1.8 Go 1.8 Release Notes (DRAFT)
 
-* What's changed
+* What's changed?
 
-So, what's happened in the last six months since Go 1.7?
+So, what's happened in the last six months?
 
 - Performance
 - Compiler changes
@@ -399,7 +400,7 @@ There is no sign of a programmer accessible poller, yet.
 
 Finally!
 
-Peter Bourgon, Sam Boyer, Jess Frazelle, and Steve Francia have been working on an _official_ dependency management tool, `dep`.
+Peter Bourgon, Edward Muller, Sam Boyer, Jess Frazelle, and Steve Francia have been working on an _official_ dependency management tool, `dep`.
 
 If you're used to Glide or govendor, you won't be too surprised.
 
