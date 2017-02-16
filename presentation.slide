@@ -18,7 +18,7 @@ If you have suggestions or corrections to this presentation, please raise [[http
 
 * Go 1.8
 
-Go 1.8 was released on the 15th of February. 
+Go 1.8 is _really_close_ to release. Seriously.
 
 .image img/rocket.jpg _ 350
 
@@ -30,10 +30,12 @@ Go 1.8 is the 9th release in the Go 1 series. It follows from the previous versi
 
 * What's changed
 
-So, what's happened in the last six months.
+So, what's happened in the last six months since Go 1.7?
 
 - Performance
 - Compiler changes
+- Tool changes
+- Runtime changes
 - Changes to the standard library
 
 * Performance
@@ -46,7 +48,9 @@ Most programs should run a bit faster, due to speedups in the garbage collector 
 
 The new back end, based on static single assignment form (SSA), generates more compact, more efficient code and provides a better platform for optimizations such as bounds check elimination.
 
-The new back end reduces the CPU time required by our benchmark programs by 20-30% on 32-bit ARM systems. For 64-bit x86 systems, which already used the SSA back end in Go 1.7, the gains are a more modest 0-10%. Other architectures will likely see improvements closer to the 32-bit ARM numbers.
+- The new back end reduces the CPU time required by our benchmark programs by 20-30% on 32-bit ARM systems.
+- For 64-bit x86 systems, which already used the SSA back end in Go 1.7, the gains are a more modest 0-10%.
+- Other architectures will likely see improvements closer to the 32-bit ARM numbers.
 
 .link https://dave.cheney.net/2016/11/19/go-1-8-toolchain-improvements Go 1.8 Toolchain Improvements
 
@@ -62,7 +66,7 @@ Garbage collection pauses should be significantly shorter than they were in Go 1
 
 * Defer
 
-The overhead of deferred function calls has been reduced by about half.
+The overhead of deferred function calls has been reduced by nearly half.
 
  name           old time/op  new time/op  delta
  Defer-4        75.1ns ± 1%  43.3ns ± 1%  -42.31%   (p=0.000 n=8+10)
@@ -105,17 +109,17 @@ There have been optimizations to implementations in the `bytes`, `crypto/aes`, `
 
 - All backends updated to use the new SSA form. Old "plan9" style compiler backend deleted.
 - Big performance improvements for 32-bit ARM.
-- Easy to add new SSA backends (for values of easy compilier engineers work in).
+- Easy to add new SSA backends (for values of easy compilier engineers work in). eg, adding mips backend was straight forward, SPARC and RISC-V are rumored to be next.
 
 * New parser
 
 Robert Griesemer and Matthew Dempsky replaced the parser.
 
-# TODO LINK TO CHANGE
+The new parser removes many of the package level variables which came along for the ride from the previous YACC based parser.
 
-The new parser removes many of the package level variables which came along for the ride from the previous YACC based parser. Removing package level globals is a stepping stone to making the compiler more parallel.
+Removing package level globals is a stepping stone to making the compiler more parallel. In fact this work has started in the development branch.
 
-This new parser is reportedly considerably faster, but in 1.8 is hamstrung by having to convert between the new style AST and the old version the rest of the compiler expects.
+This new parser is considerably faster, but in 1.8 is hamstrung by having to convert between the new style AST and the old version the rest of the compiler expects.
 
 Expect this AST conversion to be removed in Go 1.9.
 
@@ -139,7 +143,7 @@ The number of platforms Go supports, on balance, continues to grow.
 - On DragonFly BSD, Go now requires DragonFly 4.4.4 or later.
 - On OpenBSD, Go now requires OpenBSD 5.9 or later.
 - The Plan 9 port's networking support is now much more complete and matches the behavior of Unix and Windows with respect to deadlines and cancelation.
-- Go 1.8 now only supports OS X 10.8 or later. This is likely the last Go release to support 10.8. Compiling Go or running binaries on older OS X versions is untested.
+- Go 1.8 now only supports OS X 10.8 or later. _This_is_likely_the_last_Go_release_to_support_10.8_. Compiling Go or running binaries on older OS X versions is untested.
 
 * Go 1.8 may be the last to support ARMv5
 
@@ -152,10 +156,11 @@ Several companies have complained about loosing ARMv5 support, and several have 
 If you or your company care about ARMv5, you have to shoulder some of the burdon. Contact @bradfitz and set up a builder.
 
 .link https://github.com/golang/go/issues/17082 Proposal: runtime: drop support for linux/armv5E and linux/armv6
+.link https://github.com/golang/go/wiki/DashboardBuilders Dashboard Builders (wiki)
 
 _No_ARMv5_builders_means_ARMv5_support_will_be_dropped_in_Go_1.9_.
 
-* Tools
+* Tool changes
 
 * go tool yacc
 
@@ -202,6 +207,19 @@ The new `go`bug` command starts a bug report on GitHub, prefilled with informati
 Example:
 
 .play examples/gobug.sh /go bug/
+
+* Default $GOPATH
+
+Lastly, it is no longer necessary to set `$GOPATH` before using the `go` command.
+
+When `GOPATH` is not defined, the tool will use:
+
+- `$HOME/go` on Unix
+- `%USERPROFILE%\go` on Windows
+
+If you don't like these defaults, just set `$GOPATH` to your preferred location.
+
+* Runtime changes
 
 * Mutex contention profile
 
@@ -343,15 +361,6 @@ The SSA backend:
 For 32-bit ARM systems this means 20-30% speed up!
 
 For others (where SSA was used already) gains are 0-10%.
-
-* Default GOPATH
-
-Yay!
-
-When `GOPATH` is not defined, the tool will use:
-
-- `$HOME/go` on Unix
-- `%USERPROFILE%\go` on Windows
 
 * Runtime
 
