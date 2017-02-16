@@ -109,7 +109,7 @@ There have been optimizations to implementations in the `bytes`, `crypto/aes`, `
 
 - All backends updated to use the new SSA form. Old "plan9" style compiler backend deleted.
 - Big performance improvements for 32-bit ARM.
-- Easy to add new SSA backends (for values of easy compilier engineers work in). eg, adding mips backend was straight forward, SPARC and RISC-V are rumored to be next.
+- Easy to add new SSA backends (for values of easy compiler engineers work in). eg, adding MIPS backend was straight forward, SPARC and RISC-V are rumored to be next.
 
 * New parser
 
@@ -153,7 +153,7 @@ Currently we have no ARMv5 builders so have no idea if Go 1.8 actually works on 
 
 Several companies have complained about loosing ARMv5 support, and several have offered to run a builder -- but there are _still_ no real ARMv5 builders on the dashboard.
 
-If you or your company care about ARMv5, you have to shoulder some of the burdon. Contact @bradfitz and set up a builder.
+If you or your company care about ARMv5, you have to shoulder some of the burden. Contact @bradfitz and set up a builder.
 
 .link https://github.com/golang/go/issues/17082 Proposal: runtime: drop support for linux/armv5E and linux/armv6
 .link https://github.com/golang/go/wiki/DashboardBuilders Dashboard Builders (wiki)
